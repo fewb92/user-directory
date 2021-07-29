@@ -14,6 +14,10 @@ export default function Table() {
                     return (results.name.first + " " + results.name.last)
                 })
                 console.log(employeeNames)
+                const employeePhone = res.data.results.map((results) => {
+                    return (results.cell)
+                })
+                console.log(employeePhone)
             })
     })
 
