@@ -11,7 +11,7 @@ export default function Table() {
             .then((res) => {
                 console.log(res)
                 const employeeNames = res.data.results.map((results) => {
-                    return results.name
+                    return (results.name.first + " " + results.name.last)
                 })
                 console.log(employeeNames)
             })
@@ -23,7 +23,7 @@ export default function Table() {
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
+                    <th scope="col">Employee Name</th>
                     <th scope="col">Last</th>
                     <th scope="col">Handle</th>
                     </tr>
