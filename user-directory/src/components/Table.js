@@ -5,7 +5,7 @@ export default function Table() {
 
     const [employeeList, setEmployeeList] = useState([])
 
-    useEffect(() => {
+    const fetch = async () => {
         axios
             .get('https://randomuser.me/api/?results=100&nat=us')
             .then((res) => {
@@ -13,65 +13,68 @@ export default function Table() {
                 const employeeNames = res.data.results.map((results) => {
                     return (results.name.first + " " + results.name.last)
                 })
-                console.log(employeeNames)
                 const employeePhones = res.data.results.map((results) => {
                     return (results.cell)
                 })
-                console.log(employeePhones)
                 const employeeGender = res.data.results.map((results) => {
                     return (results.gender)
                 })
-                console.log(employeeGender)
                 const employeeLocation = res.data.results.map((results) => {
                     return (results.location.city)
                 })
-                console.log(employeeLocation)
-
-                var fullUserInfoArray = [{}];
-                for (var i = 0; i < employeeNames.length; i++) {
-                    var id = employeeNames[i];
-                    var count = employeePhones[i];
-                    if (fullUserInfoArray[id] === undefined) {
-                        fullUserInfoArray[id] = count;
-                    } else {
-                        fullUserInfoArray[id] += count;
+                const employeeImage = res.data.results.map((results) => {
+                    return (results.picture.thumbnail)
+                })
+                var items = employeeNames.map((id, index) => {
+                    return {
+                        id: id,
+                        image: employeeImage[index],
+                        name: employeeNames[index],
+                        location: employeeLocation[index],
+                        gender: employeeGender[index],
+                        phone: employeePhones[index],
                     }
-                }
-                console.log(fullUserInfoArray)
-            })
-    })
+                });
 
+                console.log(items)
+                setEmployeeList(items)
+            })
+    }
+
+    useEffect(() => {
+        fetch()
+    }, [])
+
+    console.log(employeeList)
     return (
         <div>
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Location</th>
                     <th scope="col">Phone Number</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                </tbody>
+                {employeeList.map((data, i) => {
+                    return (
+                        <tbody>
+                            <tr>
+                                <th scope="row">{i + 1}</th>
+                                <td>
+                                <img NameName="logos" src={data.image} alt="" />
+                                </td>
+                                <td>{data.name}</td>
+                                <td>{data.gender}</td>
+                                <td>{data.location}</td>
+                                <td>{data.phone}</td>
+                            </tr>
+                            </tbody>
+                    );
+                })}
                 </table>
         </div>
     )
