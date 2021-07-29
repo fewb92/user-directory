@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function Table() {
+
+    const [employeeList, setEmployeeList] = useState([])
+
+    useEffect(() => {
+        axios
+            .get('https://randomuser.me/api/?results=100&nat=us')
+            .then((res) => {
+                console.log(res)
+                const employeeNames = res.data.results.map((results) => {
+                    return results.name
+                })
+                console.log(employeeNames)
+            })
+    })
+
     return (
         <div>
             <table class="table">
