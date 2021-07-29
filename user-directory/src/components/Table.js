@@ -5,7 +5,7 @@ export default function Table() {
 
     const [employeeList, setEmployeeList] = useState([])
 
-    const fetch = async () => {
+    const fetch = () => {
         axios
             .get('https://randomuser.me/api/?results=100&nat=us')
             .then((res) => {
