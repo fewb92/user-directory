@@ -14,10 +14,30 @@ export default function Table() {
                     return (results.name.first + " " + results.name.last)
                 })
                 console.log(employeeNames)
-                const employeePhone = res.data.results.map((results) => {
+                const employeePhones = res.data.results.map((results) => {
                     return (results.cell)
                 })
-                console.log(employeePhone)
+                console.log(employeePhones)
+                const employeeGender = res.data.results.map((results) => {
+                    return (results.gender)
+                })
+                console.log(employeeGender)
+                const employeeLocation = res.data.results.map((results) => {
+                    return (results.location.city)
+                })
+                console.log(employeeLocation)
+
+                var fullUserInfoArray = [{}];
+                for (var i = 0; i < employeeNames.length; i++) {
+                    var id = employeeNames[i];
+                    var count = employeePhones[i];
+                    if (fullUserInfoArray[id] === undefined) {
+                        fullUserInfoArray[id] = count;
+                    } else {
+                        fullUserInfoArray[id] += count;
+                    }
+                }
+                console.log(fullUserInfoArray)
             })
     })
 
@@ -27,9 +47,10 @@ export default function Table() {
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Employee Name</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Phone Number</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +68,7 @@ export default function Table() {
                     </tr>
                     <tr>
                     <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
+                    <td>Larry the Bird</td>
                     <td>@twitter</td>
                     </tr>
                 </tbody>
